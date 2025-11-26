@@ -1,0 +1,1117 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Happy Birthday! 🐼</title>
+    <link href="https://fonts.googleapis.com/css2?family=Quicksand:wght@300;400;500;600;700&family=Dancing+Script:wght@400;700&display=swap" rel="stylesheet">
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: 'Quicksand', sans-serif;
+            overflow-x: hidden;
+            background: linear-gradient(135deg, #e3f2fd 0%, #f8bbd0 100%);
+        }
+
+        /* ============= LANDING PAGE ============= */
+        .page {
+            min-height: 100vh;
+            display: none;
+            position: relative;
+            padding: 20px;
+        }
+
+        .page.active {
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            justify-content: center;
+        }
+
+        #landing {
+            background: linear-gradient(135deg, #e3f2fd 0%, #f8bbd0 100%);
+            position: relative;
+            overflow: hidden;
+        }
+
+        .bamboo-bg {
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            opacity: 0.1;
+            background-image: repeating-linear-gradient(90deg, #1976d2 0px, #1976d2 20px, transparent 20px, transparent 80px);
+            z-index: 0;
+        }
+
+        .landing-content {
+            z-index: 1;
+            text-align: center;
+            animation: fadeInUp 1s ease-out;
+        }
+
+        .main-title {
+            font-family: 'Dancing Script', cursive;
+            font-size: clamp(2.5rem, 8vw, 5rem);
+            color: #1565c0;
+            text-shadow: 3px 3px 6px rgba(0,0,0,0.1);
+            margin-bottom: 20px;
+            animation: bounce 2s infinite;
+        }
+
+        .friend-name {
+            color: #ff6f61;
+            display: inline-block;
+        }
+
+        .panda-container {
+            font-size: clamp(4rem, 10vw, 8rem);
+            margin: 30px 0;
+            animation: wave 2s ease-in-out infinite;
+        }
+
+        .start-btn {
+            background: linear-gradient(135deg, #ec407a 0%, #f06292 100%);
+            color: white;
+            border: none;
+            padding: 20px 50px;
+            font-size: 1.5rem;
+            font-family: 'Quicksand', sans-serif;
+            font-weight: 600;
+            border-radius: 50px;
+            cursor: pointer;
+            box-shadow: 0 8px 20px rgba(236, 64, 122, 0.4);
+            transition: all 0.3s ease;
+            margin-top: 30px;
+        }
+
+        .start-btn:hover {
+            transform: translateY(-5px);
+            box-shadow: 0 12px 30px rgba(236, 64, 122, 0.6);
+        }
+
+        .music-toggle {
+            position: fixed;
+            top: 20px;
+            right: 20px;
+            background: white;
+            border: none;
+            width: 60px;
+            height: 60px;
+            border-radius: 50%;
+            font-size: 1.5rem;
+            cursor: pointer;
+            box-shadow: 0 4px 15px rgba(0,0,0,0.2);
+            z-index: 1000;
+            transition: all 0.3s ease;
+        }
+
+        .music-toggle:hover {
+            transform: scale(1.1);
+        }
+
+        /* ============= POPUP ============= */
+        .popup-overlay {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: rgba(0, 0, 0, 0.5);
+            display: none;
+            align-items: center;
+            justify-content: center;
+            z-index: 2000;
+            animation: fadeIn 0.3s ease-out;
+        }
+
+        .popup-overlay.show {
+            display: flex;
+        }
+
+        .popup-content {
+            background: white;
+            padding: 40px;
+            border-radius: 20px;
+            text-align: center;
+            max-width: 500px;
+            box-shadow: 0 10px 40px rgba(0, 0, 0, 0.3);
+            animation: slideUp 0.3s ease-out;
+        }
+
+        .popup-content h2 {
+            color: #1565c0;
+            font-size: 1.8rem;
+            margin-bottom: 20px;
+            font-family: 'Dancing Script', cursive;
+        }
+
+        .popup-content p {
+            color: #666;
+            font-size: 1.1rem;
+            line-height: 1.6;
+            margin-bottom: 20px;
+        }
+
+        .popup-icon {
+            font-size: 3rem;
+            margin: 20px 0;
+        }
+
+        .popup-btn {
+            background: linear-gradient(135deg, #ec407a 0%, #f06292 100%);
+            color: white;
+            border: none;
+            padding: 12px 30px;
+            font-size: 1rem;
+            font-family: 'Quicksand', sans-serif;
+            font-weight: 600;
+            border-radius: 25px;
+            cursor: pointer;
+            box-shadow: 0 4px 15px rgba(236, 64, 122, 0.4);
+            transition: all 0.3s ease;
+        }
+
+        .popup-btn:hover {
+            transform: translateY(-3px);
+            box-shadow: 0 6px 20px rgba(236, 64, 122, 0.6);
+        }
+
+        @keyframes slideUp {
+            from {
+                opacity: 0;
+                transform: translateY(30px);
+            }
+            to {
+                opacity: 1;
+                transform: translateY(0);
+            }
+        }
+        .balloon {
+            position: absolute;
+            font-size: 3rem;
+            animation: float 6s ease-in-out infinite;
+        }
+
+        .balloon:nth-child(1) { left: 10%; animation-delay: 0s; }
+        .balloon:nth-child(2) { left: 30%; animation-delay: 1s; }
+        .balloon:nth-child(3) { left: 50%; animation-delay: 2s; }
+        .balloon:nth-child(4) { left: 70%; animation-delay: 3s; }
+        .balloon:nth-child(5) { left: 90%; animation-delay: 4s; }
+
+        /* ============= MEMORIES PAGE ============= */
+        #memories {
+            background: linear-gradient(135deg, #e1f5fe 0%, #f3e5f5 100%);
+            padding: 60px 0;
+        }
+
+        .page-title {
+            font-family: 'Dancing Script', cursive;
+            font-size: clamp(2rem, 6vw, 3.5rem);
+            color: #1565c0;
+            text-align: center;
+            margin-bottom: 50px;
+            animation: fadeInDown 1s ease-out;
+        }
+
+        .photo-grid {
+            display: grid;
+            grid-template-columns: repeat(4, 1fr);
+            gap: 30px;
+            max-width: 1300px;
+            margin: 0 auto;
+            padding: 0 20px;
+        }
+
+        .main-photo-wrapper {
+            max-width: 1300px;
+            margin: 0 auto 60px;
+            padding: 0 20px;
+        }
+
+        .main-photo-card {
+            width: 100%;
+            border-radius: 15px;
+            overflow: hidden;
+            box-shadow: 0 15px 50px rgba(0,0,0,0.2);
+        }
+
+        .main-photo-image {
+            width: 100%;
+            height: 400px;
+            object-fit: cover;
+        }
+
+        .main-photo-caption {
+            padding: 20px;
+            background: white;
+            text-align: center;
+        }
+
+        .main-photo-title {
+            font-weight: 600;
+            color: #1565c0;
+            font-size: 1.5rem;
+        }
+
+        .photo-card {
+            background: white;
+            border-radius: 20px;
+            overflow: hidden;
+            box-shadow: 0 10px 30px rgba(0,0,0,0.1);
+            transition: all 0.3s ease;
+            cursor: pointer;
+        }
+
+        .photo-card:hover {
+            transform: translateY(-10px) scale(1.02);
+            box-shadow: 0 15px 40px rgba(0,0,0,0.2);
+        }
+
+        .photo-placeholder {
+            width: 100%;
+            height: 250px;
+            background: linear-gradient(135deg, #e3f2fd 0%, #f3e5f5 100%);
+            display: block;
+            font-size: 4rem;
+            position: relative;
+            overflow: hidden;
+        }
+
+        .photo-placeholder img {
+            width: 100%;
+            height: 100%;
+            object-fit: contain;
+            object-position: center;
+            display: block;
+        }
+
+        .photo-placeholder::before {
+            content: '📸';
+            position: absolute;
+            opacity: 0.3;
+            z-index: 0;
+        }
+
+        .photo-placeholder img ~ .panda-icon {
+            display: none;
+        }
+
+        .photo-placeholder:has(img)::before {
+            display: none;
+        }
+
+        .panda-icon {
+            position: absolute;
+            top: 10px;
+            right: 10px;
+            font-size: 2rem;
+            animation: bounce 2s infinite;
+        }
+
+        .photo-caption {
+            padding: 20px;
+            text-align: center;
+        }
+
+        .caption-title {
+            font-weight: 600;
+            color: #1565c0;
+            margin-bottom: 10px;
+            font-size: 1.2rem;
+        }
+
+        .caption-text {
+            color: #666;
+            font-size: 0.95rem;
+            line-height: 1.6;
+        }
+
+        /* ============= MESSAGE PAGE ============= */
+        #message {
+            background: linear-gradient(135deg, #bbdefb 0%, #f8bbd0 100%);
+            padding: 60px 20px;
+        }
+
+        .message-container {
+            max-width: 800px;
+            margin: 0 auto;
+            background: white;
+            padding: 50px;
+            border-radius: 30px;
+            box-shadow: 0 15px 50px rgba(0,0,0,0.1);
+            position: relative;
+            border: 5px solid #64b5f6;
+        }
+
+        .bamboo-border {
+            position: absolute;
+            width: 60px;
+            height: 60px;
+            background: #64b5f6;
+            border-radius: 10px;
+        }
+
+        .bamboo-border.top-left { top: -10px; left: -10px; }
+        .bamboo-border.top-right { top: -10px; right: -10px; }
+        .bamboo-border.bottom-left { bottom: -10px; left: -10px; }
+        .bamboo-border.bottom-right { bottom: -10px; right: -10px; }
+
+        .typewriter-text {
+            font-size: clamp(1rem, 3vw, 1.3rem);
+            line-height: 2;
+            color: #333;
+            opacity: 0;
+            animation: fadeIn 1s ease-out forwards;
+        }
+
+        .panda-deco {
+            text-align: center;
+            font-size: 4rem;
+            margin: 30px 0;
+            animation: swing 3s ease-in-out infinite;
+        }
+
+        /* ============= SURPRISE PAGE ============= */
+        #surprise {
+            background: linear-gradient(135deg, #bbdefb 0%, #f8bbd0 100%);
+            text-align: center;
+        }
+
+        .surprise-panda {
+            font-size: clamp(8rem, 20vw, 15rem);
+            cursor: pointer;
+            transition: all 0.3s ease;
+            display: inline-block;
+            position: relative;
+        }
+
+        .surprise-panda:hover {
+            transform: scale(1.1) rotate(5deg);
+        }
+
+        .surprise-text {
+            font-size: clamp(1.5rem, 4vw, 2.5rem);
+            color: #1565c0;
+            font-weight: 600;
+            margin-bottom: 50px;
+        }
+
+        .hidden-message {
+            max-width: 700px;
+            margin: 50px auto;
+            padding: 40px;
+            background: white;
+            border-radius: 30px;
+            box-shadow: 0 15px 50px rgba(0,0,0,0.2);
+            opacity: 0;
+            transform: scale(0);
+            transition: all 0.5s cubic-bezier(0.68, -0.55, 0.265, 1.55);
+        }
+
+        .hidden-message.revealed {
+            opacity: 1;
+            transform: scale(1);
+        }
+
+        .confetti {
+            position: fixed;
+            width: 10px;
+            height: 10px;
+            background: #ec407a;
+            position: absolute;
+            animation: confettiFall 3s linear;
+        }
+
+        /* ============= ENDING PAGE ============= */
+        #ending {
+            background: linear-gradient(135deg, #81d4fa 0%, #f48fb1 100%);
+            text-align: center;
+        }
+
+        .ending-content {
+            max-width: 700px;
+            margin: 0 auto;
+        }
+
+        .waving-panda {
+            font-size: clamp(6rem, 15vw, 10rem);
+            animation: wave 1.5s ease-in-out infinite;
+        }
+
+        .ending-message {
+            font-size: clamp(1.2rem, 3vw, 1.8rem);
+            color: #1565c0;
+            line-height: 1.8;
+            margin: 30px 0;
+        }
+
+        .action-buttons {
+            display: flex;
+            gap: 20px;
+            justify-content: center;
+            flex-wrap: wrap;
+            margin-top: 40px;
+        }
+
+        .action-btn {
+            background: white;
+            color: #1565c0;
+            border: 3px solid #1565c0;
+            padding: 15px 40px;
+            font-size: 1.2rem;
+            font-family: 'Quicksand', sans-serif;
+            font-weight: 600;
+            border-radius: 50px;
+            cursor: pointer;
+            transition: all 0.3s ease;
+        }
+
+        .action-btn:hover {
+            background: #1565c0;
+            color: white;
+            transform: translateY(-3px);
+        }
+
+        /* ============= NAVIGATION ============= */
+        .nav-dots {
+            position: fixed;
+            bottom: 30px;
+            left: 50%;
+            transform: translateX(-50%);
+            display: flex;
+            gap: 15px;
+            z-index: 1000;
+        }
+
+        .nav-dot {
+            width: 15px;
+            height: 15px;
+            border-radius: 50%;
+            background: rgba(255,255,255,0.5);
+            cursor: pointer;
+            transition: all 0.3s ease;
+            border: 2px solid #1976d2;
+        }
+
+        .nav-dot.active {
+            background: #1976d2;
+            transform: scale(1.3);
+        }
+
+        .next-btn {
+            position: fixed;
+            bottom: 30px;
+            right: 30px;
+            background: #ec407a;
+            color: white;
+            border: none;
+            width: 60px;
+            height: 60px;
+            border-radius: 50%;
+            font-size: 1.5rem;
+            cursor: pointer;
+            box-shadow: 0 4px 15px rgba(236, 64, 122, 0.4);
+            transition: all 0.3s ease;
+            z-index: 1000;
+        }
+
+        .next-btn:hover {
+            transform: scale(1.1);
+            box-shadow: 0 6px 20px rgba(236, 64, 122, 0.6);
+        }
+
+        /* ============= ANIMATIONS ============= */
+        @keyframes fadeInUp {
+            from {
+                opacity: 0;
+                transform: translateY(30px);
+            }
+            to {
+                opacity: 1;
+                transform: translateY(0);
+            }
+        }
+
+        @keyframes fadeInDown {
+            from {
+                opacity: 0;
+                transform: translateY(-30px);
+            }
+            to {
+                opacity: 1;
+                transform: translateY(0);
+            }
+        }
+
+        @keyframes fadeIn {
+            to {
+                opacity: 1;
+            }
+        }
+
+        @keyframes bounce {
+            0%, 100% { transform: translateY(0); }
+            50% { transform: translateY(-20px); }
+        }
+
+        @keyframes wave {
+            0%, 100% { transform: rotate(0deg); }
+            25% { transform: rotate(20deg); }
+            75% { transform: rotate(-20deg); }
+        }
+
+        @keyframes float {
+            0%, 100% { transform: translateY(0); }
+            50% { transform: translateY(-50px); }
+        }
+
+        @keyframes swing {
+            0%, 100% { transform: rotate(-5deg); }
+            50% { transform: rotate(5deg); }
+        }
+
+        @keyframes confettiFall {
+            to {
+                transform: translateY(100vh) rotate(360deg);
+                opacity: 0;
+            }
+        }
+
+        /* ============= RESPONSIVE ============= */
+        @media (max-width: 1200px) {
+            .photo-grid {
+                grid-template-columns: repeat(3, 1fr);
+            }
+        }
+
+        @media (max-width: 768px) {
+            .photo-grid {
+                grid-template-columns: repeat(2, 1fr);
+            }
+
+            .message-container {
+                padding: 30px 20px;
+            }
+
+            .nav-dots {
+                bottom: 20px;
+            }
+
+            .next-btn {
+                width: 50px;
+                height: 50px;
+                font-size: 1.2rem;
+            }
+
+            .action-buttons {
+                flex-direction: column;
+                align-items: center;
+            }
+        }
+
+        @media (max-width: 480px) {
+            .photo-grid {
+                grid-template-columns: 1fr;
+            }
+        }
+    </style>
+</head>
+<body>
+    <!-- Music Toggle Button -->
+    <button class="music-toggle" id="musicToggle">🎵</button>
+
+    <!-- Popup Overlay -->
+    <div class="popup-overlay" id="popupOverlay">
+        <div class="popup-content">
+            <div class="popup-icon">🎵</div>
+            <h2>Pro Tip!</h2>
+            <p>Click on the music button at the <strong>top right</strong> for a better experience! 🎶</p>
+            <button class="popup-btn" onclick="closePopup()">Got it! 👍</button>
+        </div>
+    </div>
+
+    <!-- Landing Page -->
+    <div class="page active" id="landing">
+        <div class="bamboo-bg"></div>
+        
+        <!-- Floating Balloons -->
+        <div class="balloon" style="top: 10%;">🎈</div>
+        <div class="balloon" style="top: 20%;">🎈</div>
+        <div class="balloon" style="top: 15%;">🎈</div>
+        <div class="balloon" style="top: 25%;">🎈</div>
+        <div class="balloon" style="top: 30%;">🎈</div>
+
+        <div class="landing-content">
+            <h1 class="main-title">
+                Happy Birthday<br>
+                <span class="friend-name" id="friendName">Tinku</span>! 
+                <!-- CUSTOMIZE: Change the name above -->
+            </h1>
+            <div class="panda-container">🐼</div>
+            <button class="start-btn" onclick="nextPage()">Aaarambikalaamaa! 🎉</button>
+        </div>
+    </div>
+
+    <!-- Memories Page -->
+    <div class="page" id="memories">
+        <h2 class="page-title">Your Amazing Memories 📸</h2>
+        
+        <!-- Main Feature Photo Card -->
+        <div class="main-photo-wrapper">
+            <div class="main-photo-card">
+                <img src="Main.jpeg" class="main-photo-image" alt="Main Memory">
+                <div class="main-photo-caption">
+                    <div class="main-photo-title">Your Most Cherished Memory</div>
+                </div>
+            </div>
+        </div>
+
+        <div class="photo-grid">
+            <!-- Photo Card 1 -->
+            <div class="photo-card">
+                <div class="photo-placeholder">
+                    <span class="panda-icon">🐼</span>
+                    <!-- CUSTOMIZE: Replace with actual image -->
+                    <img src="Snapchat-67298281.jpg" style="width: 100%; height: 100%; object-fit: cover;">
+                </div>
+            </div>
+
+            <!-- Photo Card 2 -->
+            <div class="photo-card">
+                <div class="photo-placeholder">
+                    <span class="panda-icon">🐼</span>
+                    <!-- CUSTOMIZE: Replace with actual image -->
+                    <img src="WhatsApp Image 2025-11-24 at 22.34.56.jpeg" style="width: 100%; height: 100%; object-fit: cover;">
+                </div>
+            </div>
+
+            <!-- Photo Card 3 -->
+            <div class="photo-card">
+                <div class="photo-placeholder">
+                    <span class="panda-icon">🐼</span>
+                    <!-- CUSTOMIZE: Replace with actual image -->
+                    <img src="WhatsApp Image 2025-11-24 at 22.35.32.jpeg" style="width: 100%; height: 100%; object-fit: cover;">
+                </div>
+            </div>
+
+            <!-- Photo Card 4 -->
+            <div class="photo-card">
+                <div class="photo-placeholder">
+                    <span class="panda-icon">🐼</span>
+                    <!-- CUSTOMIZE: Replace with actual image -->
+                    <img src="IMG-20231104-WA0084.jpg" style="width: 100%; height: 100%; object-fit: cover;">
+                </div>
+            </div>
+
+            <!-- Photo Card 5 -->
+            <div class="photo-card">
+                <div class="photo-placeholder">
+                    <span class="panda-icon">🐼</span>
+                    <!-- CUSTOMIZE: Replace with actual image -->
+                    <img src="WhatsApp Image 2025-11-24 at 22.36.08.jpeg" style="width: 100%; height: 100%; object-fit: cover;">
+                </div>
+            </div>
+
+            <!-- Photo Card 6 -->
+            <div class="photo-card">
+                <div class="photo-placeholder">
+                    <span class="panda-icon">🐼</span>
+                    <!-- CUSTOMIZE: Replace with actual image -->
+                    <img src="WhatsApp Image 2025-11-24 at 22.36.55.jpeg" style="width: 100%; height: 100%; object-fit: cover;">
+                </div>
+            </div>
+
+            <!-- Photo Card 7 -->
+            <div class="photo-card">
+                <div class="photo-placeholder">
+                    <span class="panda-icon">🐼</span>
+                    <!-- CUSTOMIZE: Replace with actual image -->
+                    <img src="WhatsApp Image 2025-11-24 at 22.39.56.jpeg" style="width: 100%; height: 100%; object-fit: cover;">
+                </div>
+            </div>
+
+            <!-- Photo Card 8 -->
+            <div class="photo-card">
+                <div class="photo-placeholder">
+                    <span class="panda-icon">🐼</span>
+                    <!-- CUSTOMIZE: Replace with actual image -->
+                    <img src="WhatsApp Image 2025-11-24 at 22.39.57 (1).jpeg" style="width: 100%; height: 100%; object-fit: cover;">
+                </div>
+            </div>
+
+            <!-- Photo Card 9 -->
+            <div class="photo-card">
+                <div class="photo-placeholder">
+                    <span class="panda-icon">🐼</span>
+                    <!-- CUSTOMIZE: Replace with actual image -->
+                    <img src="WhatsApp Image 2025-11-24 at 22.39.57.jpeg" style="width: 100%; height: 100%; object-fit: cover;">
+                </div>
+            </div>
+
+            <!-- Photo Card 10 -->
+            <div class="photo-card">
+                <div class="photo-placeholder">
+                    <span class="panda-icon">🐼</span>
+                    <!-- CUSTOMIZE: Replace with actual image -->
+                    <img src="WhatsApp Image 2025-11-24 at 22.39.58.jpeg" style="width: 100%; height: 100%; object-fit: cover;">
+                </div>
+            </div>
+
+            <!-- Photo Card 11 -->
+            <div class="photo-card">
+                <div class="photo-placeholder">
+                    <span class="panda-icon">🐼</span>
+                    <!-- CUSTOMIZE: Replace with actual image -->
+                    <img src="WhatsApp Image 2025-11-24 at 22.39.59.jpeg" style="width: 100%; height: 100%; object-fit: cover;">
+                </div>
+            </div>
+
+            <!-- Photo Card 12 -->
+            <div class="photo-card">
+                <div class="photo-placeholder">
+                    <span class="panda-icon">🐼</span>
+                    <!-- CUSTOMIZE: Replace with actual image -->
+                    <img src="WhatsApp Image 2025-11-24 at 22.53.08.jpeg" style="width: 100%; height: 100%; object-fit: cover;">
+                </div>
+            </div>
+
+            <!-- Photo Card 13 -->
+            <div class="photo-card">
+                <div class="photo-placeholder">
+                    <span class="panda-icon">🐼</span>
+                    <!-- CUSTOMIZE: Replace with actual image -->
+                    <img src="IMG-20231104-WA0084.jpg" style="width: 100%; height: 100%; object-fit: cover;">
+                </div>
+            </div>
+
+            <!-- Photo Card 14 -->
+            <div class="photo-card">
+                <div class="photo-placeholder">
+                    <span class="panda-icon">🐼</span>
+                    <!-- CUSTOMIZE: Replace with actual image -->
+                    <img src="WhatsApp Image 2025-11-25 at 18.36.20.jpeg" style="width: 100%; height: 100%; object-fit: cover;">
+
+                </div>
+            </div>
+
+            <!-- Photo Card 15 -->
+            <div class="photo-card">
+                <div class="photo-placeholder">
+                    <span class="panda-icon">🐼</span>
+                    <!-- CUSTOMIZE: Replace with actual image -->
+                    <img src="WhatsApp Image 2025-11-25 at 18.36.19.jpeg" style="width: 100%; height: 100%; object-fit: cover;">
+                </div>
+            </div>
+
+            <!-- Photo Card 16 -->
+            <div class="photo-card">
+                <div class="photo-placeholder">
+                    <span class="panda-icon">🐼</span>
+                    <!-- CUSTOMIZE: Replace with actual image -->
+                    <img src="IMG-20231104-WA0090.jpg" style="width: 100%; height: 100%; object-fit: cover;">
+                </div>
+            </div>
+
+            <!-- Add more photo cards as needed -->
+        </div>
+    </div>
+
+    <!-- Message Page -->
+    <div class="page" id="message">
+        <h2 class="page-title">A Special Message 💌</h2>
+        <div class="message-container">
+            <div class="bamboo-border top-left"></div>
+            <div class="bamboo-border top-right"></div>
+            <div class="bamboo-border bottom-left"></div>
+            <div class="bamboo-border bottom-right"></div>
+
+            <div class="panda-deco">🐼</div>
+            
+            <div class="typewriter-text">
+                <!-- CUSTOMIZE: Write your heartfelt birthday message here -->
+                Heyyy Vikas 🙋‍♂️ ,<br><br>
+            First of all  "இனிய பிறந்தநாள் நல்வாழ்த்துக்கள் ❤️"<br><br>
+
+            Today is all about celebrating <b>YOU</b> and the incredible person you are.Your kindness , care and friendship mean something to me , Athuku romba nandri 🙏🩵<br><br>
+
+            I know the age you're turning this year sounds serious , but don't worry your heart is still young , bright and full of wonders as ever 😁💌 <br><br>
+
+            Enaku theriyum lately this year has brought some mental and emotional discomfots to you , nee athellam pathi ethuvum nenaikatha en na ini vara pora years will bring lot of joy and happiness to you 📈 , <b>You are moving towards with more wisdom and resilience than you realise 💪🔥</b><br><br>
+
+            I believe that in the last few months we become romba close 😁 and always please be the same.I really value this connection and eppayume en kooda iru to <b> increase Latency 😝 and to enlighten this dumb emotionless creature 👻.</b><br><br>
+
+             Eppayume remember that whenever you come with <b>Oru sambavam panniten 😂 I'm always here to listen 🫂.</b> I will always be there with you sometimes to support you but <b>most of the times to annoy you 😅</b> because that's just my way showing I care 🗿.<br><br>
+
+              Don't complicate things , don't overthink , You're Strong 💪 , mature and Capable enough to handle all the situations what life throws at you !<br><br>
+
+              You're are the one who never fails to appreciate the <b>pookiness</b> in me 😅 and <b>Thank you being such an Amazing friend 🫶🎀.</b>Here's to another year of adventures, laughter and unforgettable memories.<br><br>
+ 
+               May all your dreams come true this year.<b>Nee oru Massss 🔥🔥 and You deserve nothing but the best and all the happiness in the world 💗🤗.</b><br><br><b>Once again "A many more happy returns of the day , Tinku ❤️🩵🔥🎀📈👻"</b><br><br>
+
+With love ,<br>
+RO ❤️
+            </div>
+
+            <div class="panda-deco">🎋</div>
+        </div>
+    </div>
+
+    <!-- Surprise Page -->
+    <div class="page" id="surprise">
+        <h2 class="page-title">Click the Panda for a Surprise! 🎁</h2>
+        <p class="surprise-text">Go ahead, give it a tap! 👇</p>
+        
+        <div class="surprise-panda" id="surprisePanda">🐼</div>
+
+        <div class="hidden-message" id="hiddenMessage">
+            <h3 style="color: #6a1b9a; font-size: 2rem; margin-bottom: 20px;">🎉 SURPRISE! 🎉</h3>
+            <p style="font-size: 1.3rem; line-height: 1.8; color: #333;">
+                <!-- CUSTOMIZE: Add your surprise message or embed a video -->
+                You are absolutely AMAZING! Never forget how special you are and how much 
+                joy you bring to everyone around you. This is YOUR day to shine! ✨<br><br>
+                
+                <!-- To add a video, uncomment and replace the URL: -->
+                <!-- <iframe width="100%" height="315" src="https://www.youtube.com/embed/YOUR_VIDEO_ID" 
+                frameborder="0" allowfullscreen style="border-radius: 15px; margin-top: 20px;"></iframe> -->
+                
+                Keep being your wonderful self! 🐼💕
+            </p>
+        </div>
+    </div>
+
+    <!-- Ending Page -->
+    <div class="page" id="ending">
+        <div class="ending-content">
+            <div class="waving-panda">🐼👋</div>
+            
+            <p class="ending-message">
+                <!-- CUSTOMIZE: Final closing message -->
+                I hope this little surprise brought a smile to your face! Time kammi ya irunthathala UI la perusa concentrate panna mudila , especially in the Memories section.So adjust panniko.
+                You deserve all the 
+                happiness today and every day. Here's to you and another amazing year ahead!<br><br>
+                
+                Happy Birthday once again! 🎂🎈🎉
+            </p>
+
+            <div class="action-buttons">
+                <button class="action-btn" onclick="restartSite()">🔄 Experience Again</button>
+            </div>
+
+        </div>
+    </div>
+
+    <!-- Navigation Dots -->
+    <div class="nav-dots" id="navDots">
+        <div class="nav-dot active" onclick="goToPage(0)"></div>
+        <div class="nav-dot" onclick="goToPage(1)"></div>
+        <div class="nav-dot" onclick="goToPage(2)"></div>
+        <div class="nav-dot" onclick="goToPage(3)"></div>
+        <div class="nav-dot" onclick="goToPage(4)"></div>
+    </div>
+
+    <!-- Next Button -->
+    <button class="next-btn" id="nextBtn" onclick="nextPage()">→</button>
+
+    <!-- Audio Element (Background Music) -->
+    <audio id="bgMusic" loop>
+        <!-- CUSTOMIZE: Add your background music file -->
+        <source src="Happy-Birthday.mp3" type="audio/mpeg">
+    </audio>
+
+    <script>
+        // ============= POPUP NOTIFICATION =============
+        window.addEventListener('load', () => {
+            setTimeout(() => {
+                const popupOverlay = document.getElementById('popupOverlay');
+                popupOverlay.classList.add('show');
+            }, 3000);
+        });
+
+        function closePopup() {
+            const popupOverlay = document.getElementById('popupOverlay');
+            popupOverlay.classList.remove('show');
+        }
+
+        // Close popup when clicking outside
+        document.getElementById('popupOverlay').addEventListener('click', (e) => {
+            if (e.target.id === 'popupOverlay') {
+                closePopup();
+            }
+        });
+
+        // ============= PAGE NAVIGATION =============
+        let currentPage = 0;
+        const pages = document.querySelectorAll('.page');
+        const navDots = document.querySelectorAll('.nav-dot');
+        const nextBtn = document.getElementById('nextBtn');
+
+        function goToPage(pageIndex) {
+            if (pageIndex < 0 || pageIndex >= pages.length) return;
+            
+            pages[currentPage].classList.remove('active');
+            navDots[currentPage].classList.remove('active');
+            
+            currentPage = pageIndex;
+            
+            pages[currentPage].classList.add('active');
+            navDots[currentPage].classList.add('active');
+            
+            // Scroll to top of the page
+            window.scrollTo(0, 0);
+            
+            // Hide next button on last page
+            if (currentPage === pages.length - 1) {
+                nextBtn.style.display = 'none';
+            } else {
+                nextBtn.style.display = 'block';
+            }
+
+            // Play sound effect on page change
+            playSound();
+        }
+
+        function nextPage() {
+            goToPage(currentPage + 1);
+        }
+
+        // ============= MUSIC TOGGLE =============
+        const bgMusic = document.getElementById('bgMusic');
+        const musicToggle = document.getElementById('musicToggle');
+        let musicPlaying = false;
+
+        musicToggle.addEventListener('click', () => {
+            if (musicPlaying) {
+                bgMusic.pause();
+                musicToggle.textContent = '🎵';
+                musicPlaying = false;
+            } else {
+                bgMusic.play();
+                musicToggle.textContent = '🎶';
+                musicPlaying = true;
+            }
+        });
+
+        // ============= SURPRISE PAGE =============
+        const surprisePanda = document.getElementById('surprisePanda');
+        const hiddenMessage = document.getElementById('hiddenMessage');
+        let surpriseRevealed = false;
+
+        surprisePanda.addEventListener('click', () => {
+            if (!surpriseRevealed) {
+                // Create confetti explosion
+                createConfetti();
+                
+                // Reveal hidden message
+                setTimeout(() => {
+                    hiddenMessage.classList.add('revealed');
+                }, 500);
+                
+                surpriseRevealed = true;
+                
+                // Play celebration sound
+                playSound();
+            }
+        });
+
+        function createConfetti() {
+            const colors = ['#1976d2', '#ec407a', '#64b5f6', '#f06292', '#0d47a1', '#c2185b'];
+            const surprisePage = document.getElementById('surprise');
+            
+            for (let i = 0; i < 100; i++) {
+                const confetti = document.createElement('div');
+                confetti.className = 'confetti';
+                confetti.style.left = Math.random() * 100 + '%';
+                confetti.style.top = Math.random() * 100 + '%';
+                confetti.style.background = colors[Math.floor(Math.random() * colors.length)];
+                confetti.style.animationDelay = Math.random() * 2 + 's';
+                surprisePage.appendChild(confetti);
+                
+                setTimeout(() => confetti.remove(), 3000);
+            }
+        }
+
+        // ============= SOUND EFFECTS =============
+        function playSound() {
+            // Create a simple beep sound using Web Audio API
+            const audioContext = new (window.AudioContext || window.webkitAudioContext)();
+            const oscillator = audioContext.createOscillator();
+            const gainNode = audioContext.createGain();
+            
+            oscillator.connect(gainNode);
+            gainNode.connect(audioContext.destination);
+            
+            oscillator.frequency.value = 800;
+            oscillator.type = 'sine';
+            
+            gainNode.gain.setValueAtTime(0.3, audioContext.currentTime);
+            gainNode.gain.exponentialRampToValueAtTime(0.01, audioContext.currentTime + 0.1);
+            
+            oscillator.start(audioContext.currentTime);
+            oscillator.stop(audioContext.currentTime + 0.1);
+        }
+
+        // ============= ENDING PAGE ACTIONS =============
+        function restartSite() {
+            surpriseRevealed = false;
+            hiddenMessage.classList.remove('revealed');
+            goToPage(0);
+        }
+
+        function downloadMessages() {
+            // Create a simple text file with all messages
+            const friendName = document.getElementById('friendName').textContent;
+            const messageText = document.querySelector('.typewriter-text').textContent;
+            
+            const content = `Happy Birthday ${friendName}!\n\n${messageText}\n\nWith love and pandas 🐼💚`;
+            
+            const blob = new Blob([content], { type: 'text/plain' });
+            const url = window.URL.createObjectURL(blob);
+            const a = document.createElement('a');
+            a.href = url;
+            a.download = 'birthday-messages.txt';
+            document.body.appendChild(a);
+            a.click();
+            document.body.removeChild(a);
+            window.URL.revokeObjectURL(url);
+        }
+
+        // ============= KEYBOARD NAVIGATION =============
+        document.addEventListener('keydown', (e) => {
+            if (e.key === 'ArrowRight') {
+                nextPage();
+            } else if (e.key === 'ArrowLeft' && currentPage > 0) {
+                goToPage(currentPage - 1);
+            }
+        });
+
+        // ============= TOUCH SWIPE SUPPORT =============
+        let touchStartX = 0;
+        let touchEndX = 0;
+
+        document.addEventListener('touchstart', (e) => {
+            touchStartX = e.changedTouches[0].screenX;
+        });
+
+        document.addEventListener('touchend', (e) => {
+            touchEndX = e.changedTouches[0].screenX;
+            handleSwipe();
+        });
+
+        function handleSwipe() {
+            if (touchEndX < touchStartX - 50) {
+                nextPage();
+            }
+            if (touchEndX > touchStartX + 50 && currentPage > 0) {
+                goToPage(currentPage - 1);
+            }
+        }
+    </script>
+</body>
+</html>
